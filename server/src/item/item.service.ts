@@ -25,6 +25,7 @@ export class ItemService {
 
   findOne(id: number) {
     const foundItem = items.find(e => e.id == id)
+    console.log(items, foundItem)
     return {
       message: `This action returns a #${id} item`,
       value: foundItem
@@ -32,7 +33,7 @@ export class ItemService {
   }
 
   update(id: number, updateItemDto: UpdateItemDto) {
-    const updatedItem = items.filter(e => e.key == id)[0]
+    const updatedItem = items.find(e => e.id == id)
     if (updateItemDto.id) {
       updatedItem.id = updateItemDto.id
     }
