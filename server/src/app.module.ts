@@ -7,15 +7,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserModule } from './user/user.module';
 import { UserSchema } from './user/entities/user.entitySchema';
 import { PullSchema } from './pull/entities/pull.entitySchema';
-import { GameAccountSchema } from './uid/entities/gameacc.entitySchema';
 import { UserController } from './user/user.controller';
-import { PullController } from './pull/pull.controller';
 import { UserService } from './user/user.service';
-import { GameAccountController } from './uid/gameacc.controller';
-import { GameAccountService } from './uid/gameacc.service';
-import { GameAccountModule } from './uid/gameacc.module';
-import { RouterModule } from '@nestjs/core';
-import { AuthModule } from './auth/auth.module';
+import { GameAccountModule } from './gameacc/gameacc.module';
+import { GameAccountSchema } from './gameacc/entities/gameacc.entitySchema';
+import { GameAccountController } from './gameacc/gameacc.controller';
+import { GameAccountService } from './gameacc/gameacc.service';
 
 @Module({
   imports: [
@@ -32,9 +29,8 @@ import { AuthModule } from './auth/auth.module';
       entities: [UserSchema, PullSchema, GameAccountSchema],
       synchronize: true,
     }),
-    AuthModule,
   ],
-  controllers: [AppController, UserController, PullController, GameAccountController],
+  controllers: [AppController, UserController, GameAccountController],
   providers: [AppService, UserService, PullService, GameAccountService],
 })
 export class AppModule {}
