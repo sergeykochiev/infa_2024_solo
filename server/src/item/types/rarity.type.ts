@@ -1,1 +1,0 @@
-export type Rarity = 3 | 4 | 5
