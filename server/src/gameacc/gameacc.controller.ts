@@ -1,13 +1,14 @@
-import { Controller, Get, HttpException, HttpStatus, Param, Post, Query } from '@nestjs/common';
+import { Controller, Get, Request, UseGuards } from '@nestjs/common';
 import { GameAccountService } from './gameacc.service';
-import { BannerType } from 'src/pull/entity/pull.entity';
+import { AuthGuard } from '@nestjs/passport';
 
-@Controller('uid')
+@Controller('gameacc')
 export class GameAccountController {
     constructor(private readonly gameAccountService: GameAccountService) {}
 
-    @Get(':id')
-    async getPulls(@Param('id') id: number, @Query('type') type: BannerType) {
-        return this.gameAccountService.getPulls(id, type)
+    @UseGuards(AuthGuard('jwt'))
+    @Get()
+    async getMany(@Request() request) {
+        return this.gameAccountService.getMany(request.user.login)
     }
 }

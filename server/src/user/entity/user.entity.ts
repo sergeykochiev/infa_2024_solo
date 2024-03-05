@@ -11,7 +11,6 @@ export class User {
         if (!createUserDto) {
             return
         }
-        this.id = createUserDto.id
         this.login = createUserDto.login
         this.password = createUserDto.password
         this.gameAccounts = createUserDto.gameAccounts

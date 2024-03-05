@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { BannerType, Pull } from './entity/pull.entity';
 import { HoyoPull } from './entity/hoyoPull.entity';
 import { fetchData } from 'src/const';
+import { UserService } from 'src/user/user.service';
 
 interface fetchParams {
     lang: 'en',
@@ -13,7 +14,11 @@ interface fetchParams {
 
 @Injectable()
 export class PullService {
-    async fetchPulls(lastId: number | void, params: fetchParams, pulls: Array<Pull> = [],): Promise<Array<Pull> | void> {
+    constructor(
+        private readonly userService: UserService,
+    ) {}
+
+    async fetchPulls(lastId: number | void, params: fetchParams, pulls: Array<Pull> = []): Promise<Array<Pull> | void> {
         const prevPulls: Array<Pull> = pulls
         const response = await fetch(`${fetchData.hoyoUrl}/?${new URLSearchParams(params.toString()).toString()}`)
         const parsed = await response.json()
@@ -38,5 +43,13 @@ export class PullService {
         })
         await new Promise(e => setTimeout(e, 3000))
         this.fetchPulls(lastId, params, prevPulls)
+    }
+
+    async getMany(uid: number, type: BannerType, login: string): Promise<Array<Pull> | void> {
+        const user = await this.userService.findOne(login)
+        if (!user || user.gameAccounts.length == 0) {
+            return
+        }
+        return user.gameAccounts.find(gameacc => gameacc.uid == uid).pulls.filter(pulls => pulls.bannerType == type)
     }
 }

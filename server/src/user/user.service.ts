@@ -4,6 +4,7 @@ import { User } from './entity/user.entity';
 import { DataSource, Repository } from 'typeorm';
 import { GameAccount } from 'src/gameacc/entity/gameacc.entity';
 import { CreateUserDto } from './dto/createUserDto';
+import bcrypt from 'bcrypt'
 
 @Injectable()
 export class UserService {
@@ -12,19 +13,26 @@ export class UserService {
         private readonly userRepository: Repository<User>,
         private readonly dataSource: DataSource
     ) {}
-    
-    async getGameAccounts(id: number): Promise<Array<GameAccount> | []> {
-        const user = await this.userRepository.findOneBy({ id: id })
-        return user.gameAccounts
-    }
 
     async findOne(login: string): Promise<User | void> {
         return await this.userRepository.findOneBy({ login: login })
     }
 
-    async saveOne(createUserDto: CreateUserDto): Promise<void> {
+    async createOne(createUserDto: CreateUserDto): Promise<void> {
+        if (await this.findOne(createUserDto.login)) {
+            throw new Error('Login already exists')
+        }
         await this.dataSource.transaction(async (manager) => {
-            await manager.save(createUserDto)
+            await manager.save(new User({
+                ...createUserDto,
+                password: await bcrypt.hash(createUserDto.password, 10)
+            }))
+        })
+    }
+
+    async saveOne(user: User): Promise<void> {
+        await this.dataSource.transaction(async (manager) => {
+            await manager.save(user)
         })
     }
 }

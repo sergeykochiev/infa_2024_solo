@@ -2,22 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { UserService } from './user/user.service';
 import { PullService } from './pull/pull.service';
 import { GameAccountService } from './gameacc/gameacc.service';
-import { SavePullsDto } from './dto/savePullsDto';
 import { BannerType } from './pull/entity/pull.entity';
 import { GameAccount } from './gameacc/entity/gameacc.entity';
 import { fetchData } from './const';
+import { User } from './user/entity/user.entity';
 
 @Injectable()
 export class AppService {
   constructor(
     private readonly userService: UserService,
     private readonly pullService: PullService,
-    private readonly gameAccountService: GameAccountService
   ) {}
-
-  getHello(): string {
-    return 'Hello World!';
-  }
 
   async fetchUidByAuthkey(authkey: string): Promise<number | void> { // ok
     const params = { ...fetchData.hoyoParams,
@@ -32,19 +27,19 @@ export class AppService {
     }
   }
 
-  async savePulls(savePullsDto: SavePullsDto): Promise<void> {
-    const user = await this.userService.findOne(savePullsDto.login)
+  async savePulls(authkey: string, login: string): Promise<void> {
+    const user = await this.userService.findOne(login)
     if (!user) {
       return
     }
-    const uid = await this.fetchUidByAuthkey(savePullsDto.authkey)
+    const uid = await this.fetchUidByAuthkey(authkey)
     if (!uid) {
       //error with hoyo server
       return
     }
     let gameAcc = user.gameAccounts.find(gameAcc => gameAcc.uid == uid)
     const params = { ...fetchData.hoyoParams,
-      'authkey': savePullsDto.authkey,
+      'authkey': authkey,
       'gacha_type': null
     }
     const bannerTypes: Array<BannerType> = [1, 11, 12]
@@ -53,8 +48,8 @@ export class AppService {
         params.gacha_type = type
         let lastId: number | null
         if (gameAcc) {
-            const pulls = await this.gameAccountService.getPulls(gameAcc.id, type)
-            if (pulls.length > 0) {
+            const pulls = await this.pullService.getMany(gameAcc.uid, type, login)
+            if (pulls && pulls.length > 0) {
                 lastId = pulls[0].id
             }
         }
