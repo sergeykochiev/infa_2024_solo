@@ -6,9 +6,13 @@ import { CreateUserDto } from './dto/createUserDto';
 export class UserController {
     constructor(private readonly userService: UserService) {}
 
-    
     @Get(':id')
     async getGameAccounts(@Param('id') id: number) {
         return this.userService.getGameAccounts(id)
+    }
+
+    @Post('signup')
+    async createOne(@Body() createUserDto: CreateUserDto) {
+        return this.userService.saveOne(createUserDto)
     }
 }

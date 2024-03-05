@@ -1,6 +1,6 @@
 import { Controller, Get, HttpException, HttpStatus, Param, Post, Query } from '@nestjs/common';
 import { GameAccountService } from './gameacc.service';
-import { BannerType } from 'src/pull/entities/pull.entity';
+import { BannerType } from 'src/pull/entity/pull.entity';
 
 @Controller('uid')
 export class GameAccountController {

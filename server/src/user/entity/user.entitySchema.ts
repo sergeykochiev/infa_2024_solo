@@ -12,6 +12,7 @@ export const UserSchema = new EntitySchema<User>({
         },
         login: {
             type: String,
+            unique: true
         },
         password: {
             type: String,
@@ -20,7 +21,8 @@ export const UserSchema = new EntitySchema<User>({
     relations: {
         gameAccounts: {
             type: 'one-to-many',
-            target: 'GameAccount'
+            target: 'GameAccount',
+            cascade: true
         }
     }
 })

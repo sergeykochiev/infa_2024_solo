@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { GameAccount } from './entities/gameacc.entity';
+import { GameAccount } from './entity/gameacc.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { UserService } from 'src/user/user.service';
-import { BannerType, Pull } from 'src/pull/entities/pull.entity';
+import { BannerType, Pull } from 'src/pull/entity/pull.entity';
 import { PullService } from 'src/pull/pull.service';
 import { SavePullsDto } from '../dto/savePullsDto';
-import { User } from 'src/user/entities/user.entity';
+import { User } from 'src/user/entity/user.entity';
 
 @Injectable()
 export class GameAccountService {

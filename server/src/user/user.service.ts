@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
+import { User } from './entity/user.entity';
 import { DataSource, Repository } from 'typeorm';
-import { GameAccount } from 'src/gameacc/entities/gameacc.entity';
+import { GameAccount } from 'src/gameacc/entity/gameacc.entity';
 import { CreateUserDto } from './dto/createUserDto';
 
 @Injectable()

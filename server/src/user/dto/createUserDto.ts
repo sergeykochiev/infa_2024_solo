@@ -1,7 +1,8 @@
-import { GameAccount } from "src/gameacc/entities/gameacc.entity"
+import { GameAccount } from "src/gameacc/entity/gameacc.entity"
 
 export class CreateUserDto {
-    public id?: number
-    public login: string
-    public gameAccounts?: Array<GameAccount>
+    readonly id?: number
+    readonly login: string
+    readonly password: string
+    readonly gameAccounts?: Array<GameAccount>
 }

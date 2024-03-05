@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { BannerType, Pull } from './entities/pull.entity';
-import { HoyoPull } from './entities/hoyoPull.entity';
+import { BannerType, Pull } from './entity/pull.entity';
+import { HoyoPull } from './entity/hoyoPull.entity';
 import { fetchData } from 'src/const';
 
 interface fetchParams {
