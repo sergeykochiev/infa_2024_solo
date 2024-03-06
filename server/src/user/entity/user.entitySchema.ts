@@ -18,11 +18,4 @@ export const UserSchema = new EntitySchema<User>({
             type: String,
         }
     },
-    relations: {
-        gameAccounts: {
-            type: 'one-to-many',
-            target: 'GameAccount',
-            cascade: true
-        }
-    }
 })

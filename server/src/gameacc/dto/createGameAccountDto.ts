@@ -1,7 +1,7 @@
-import { Pull } from "src/pull/entity/pull.entity"
+import { User } from "src/user/entity/user.entity"
 
 export class CreateGameAccountDto {
     readonly id?: number
     readonly uid: number
-    readonly pulls?: Array<Pull>
+    readonly user: User
 }

@@ -19,4 +19,11 @@ export const PullSchema = new EntitySchema<Pull>({
             type: Date
         }
     },
+    relations: {
+        gameAccount: {
+            type: 'many-to-one',
+            target: 'GameAccount',
+            eager: true
+        }
+    }
 })

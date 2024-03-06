@@ -1,10 +1,10 @@
-import { Pull } from "src/pull/entity/pull.entity"
 import { CreateGameAccountDto } from "../dto/createGameAccountDto"
+import { User } from "src/user/entity/user.entity"
 
 export class GameAccount {
     public id?: number
     public uid: number
-    public pulls: Array<Pull>
+    public user: User
     // will be added later
     // public type: 'public' | 'private' = 'private'
 
@@ -14,6 +14,6 @@ export class GameAccount {
         }
         this.id = createGameAccountDto.id
         this.uid = createGameAccountDto.uid
-        this.pulls = createGameAccountDto.pulls
+        this.user = createGameAccountDto.user
     }
 }

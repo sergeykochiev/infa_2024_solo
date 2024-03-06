@@ -1,3 +1,4 @@
+import { GameAccount } from "src/gameacc/entity/gameacc.entity"
 import { BannerType } from "../entity/pull.entity"
 
 export class CreatePullDto {
@@ -6,4 +7,5 @@ export class CreatePullDto {
     readonly bannerType: BannerType
     readonly itemId: number
     readonly timestamp: string
+    readonly gameAccount: GameAccount
 }

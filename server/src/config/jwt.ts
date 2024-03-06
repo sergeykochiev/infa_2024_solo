@@ -5,7 +5,7 @@ dotenvConfig({ path: 'src/.env' })
 
 const config = {
     secret: `${process.env.JWT_SECRET}`,
-    signOptions: { expiresIn: '3600s' }
+    signOptions: { expiresIn: '24hr' }
 }
 
 export default registerAs('jwt', () => config)

@@ -4,7 +4,9 @@ import { UserModule } from 'src/user/user.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { JwtStrategy } from './jwt.strategy';
+import { JwtStrategy } from './strategy/jwt.strategy';
+import { AuthController } from './auth.controller';
+import { LocalStrategy } from './strategy/local.strategy';
 
 @Module({
   imports: [UserModule, PassportModule,
@@ -13,7 +15,7 @@ import { JwtStrategy } from './jwt.strategy';
       useFactory: async (configService: ConfigService) => (configService.get('jwt'))
     })
   ],
-  providers: [AuthService, JwtStrategy],
-  exports: [AuthService]
+  providers: [AuthService, JwtStrategy, LocalStrategy],
+  controllers: [AuthController]
 })
 export class AuthModule {}

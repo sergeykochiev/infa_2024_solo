@@ -5,7 +5,6 @@ export class User {
     public id: number
     public login: string
     public password: string
-    public gameAccounts: Array<GameAccount>
 
     constructor(createUserDto?: CreateUserDto) {
         if (!createUserDto) {
@@ -13,6 +12,5 @@ export class User {
         }
         this.login = createUserDto.login
         this.password = createUserDto.password
-        this.gameAccounts = createUserDto.gameAccounts
     }
 }

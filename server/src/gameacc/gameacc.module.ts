@@ -3,11 +3,11 @@ import { GameAccountController } from './gameacc.controller';
 import { GameAccountService } from './gameacc.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GameAccountSchema } from './entity/gameacc.entitySchema';
-import { UserModule } from 'src/user/user.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([GameAccountSchema]), UserModule],
+  imports: [TypeOrmModule.forFeature([GameAccountSchema])],
   controllers: [GameAccountController],
-  providers: [GameAccountService]
+  providers: [GameAccountService],
+  exports: [GameAccountService]
 })
 export class GameAccountModule {}

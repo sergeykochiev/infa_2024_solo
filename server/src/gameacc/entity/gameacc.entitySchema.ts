@@ -15,10 +15,10 @@ export const GameAccountSchema = new EntitySchema<GameAccount>({
         },
     },
     relations: {
-        pulls: {
-            type: 'one-to-many',
-            target: 'Pull',
-            cascade: true
+        user: {
+            type: 'many-to-one',
+            target: 'User',
+            eager: true
         },
     }
 })
