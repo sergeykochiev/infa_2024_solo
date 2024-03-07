@@ -11,7 +11,8 @@ export class PullController {
     @UseGuards(JwtAuthGuard)
     @Get(':uid/:type')
     async getPulls(@Param('uid') uid: number, @Param('type') type: BannerType, @Request() request) {
-        return this.pullService.getMany(uid, type, request.user.login)
+        console.log(uid, type)
+        return { result: await this.pullService.getMany(uid, type, request.user.login) }
     }
 
     @UseGuards(JwtAuthGuard)
@@ -20,6 +21,7 @@ export class PullController {
         if (!authkey) {
             throw new HttpException('no authkey specified', HttpStatus.BAD_REQUEST)
         }
-        return await this.pullService.createMany(authkey, req.user)
+        const newPullsCount = await this.pullService.createMany(authkey, req.user.login)
+        return { message: `successfully created ${newPullsCount} pulls` }
     }
 }

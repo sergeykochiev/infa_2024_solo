@@ -10,6 +10,6 @@ export class GameAccountController {
     @UseGuards(JwtAuthGuard)
     @Get()
     async getMany(@Request() request) {
-        return this.gameAccountService.findMany(request.user.login)
+        return { result: await this.gameAccountService.findMany(request.user.login) }
     }
 }

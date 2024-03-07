@@ -10,6 +10,6 @@ export class AuthController {
     @UseGuards(LocalAuthGuard)
     @Post('login')
     async login(@Request() request: { user: Partial<User> }) {
-        return this.authService.login(request.user);
+        return { access_token: this.authService.login(request.user) }
     }
 }

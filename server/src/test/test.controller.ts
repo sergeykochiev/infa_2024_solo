@@ -1,5 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { GameAccountService } from 'src/gameacc/gameacc.service';
+import { ItemService } from 'src/item/item.service';
 import { PullService } from 'src/pull/pull.service';
 import { UserService } from 'src/user/user.service';
 
@@ -8,22 +9,28 @@ export class TestController {
     constructor(
         private readonly userService: UserService,
         private readonly gameAccountService: GameAccountService,
-        private readonly pullService: PullService
+        private readonly pullService: PullService,
+        private readonly itemService: ItemService
     ) {}
 
     @Get('users')
     async getUsers() {
-        return await this.userService.getAll()
+        return { result: await this.userService.getAll() }
     }
 
     @Get('gameaccs')
     async getGameaccs() {
-        return await this.gameAccountService.getAll()
+        return { result: await this.gameAccountService.getAll() }
     }
 
     @Get('pulls')
     async getPulls() {
-        return await this.pullService.getAll()
+        return { result: await this.pullService.getAll() }
+    }
+
+    @Get('items')
+    async getItems() {
+        return { result: await this.itemService.getAll() }
     }
 
 }

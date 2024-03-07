@@ -22,6 +22,7 @@ import { GameAccountController } from './gameacc/gameacc.controller';
 import { PullService } from './pull/pull.service';
 import { GameAccountService } from './gameacc/gameacc.service';
 import { TestModule } from './test/test.module';
+import { ItemModule } from './item/item.module';
 
 @Module({
   imports: [
@@ -38,7 +39,8 @@ import { TestModule } from './test/test.module';
       useFactory: async (configService: ConfigService) => (configService.get('typeorm'))
     }),
     HelperModule,
-    TestModule
+    TestModule,
+    ItemModule
   ],
   controllers: [AppController],
   providers: [AppService],

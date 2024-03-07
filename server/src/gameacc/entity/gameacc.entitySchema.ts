@@ -18,7 +18,6 @@ export const GameAccountSchema = new EntitySchema<GameAccount>({
         user: {
             type: 'many-to-one',
             target: 'User',
-            eager: true
         },
     }
 })
