@@ -12,6 +12,7 @@ export class PullController {
     @Get(':uid/:type')
     async getPulls(@Param('uid') uid: number, @Param('type') type: BannerType, @Request() request) {
         console.log(uid, type)
+        console.log(request.cookies)
         return { result: await this.pullService.getMany(uid, type, request.user.login) }
     }
 
