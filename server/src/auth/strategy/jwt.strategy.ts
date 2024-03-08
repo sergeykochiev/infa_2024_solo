@@ -6,7 +6,6 @@ import { Request } from 'express';
 
 const cookieExtractor = (request: Request) => {
   if (request && request.cookies) {
-    console.log(request.cookies.dupa)
     return request.cookies.jwt
   }
   return null
@@ -20,12 +19,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: cookieExtractor,
       ignoreExpiration: false,
-      usernameField: 'login',
       secretOrKey: configService.get('jwt').secret,
     })
   }
 
   async validate(payload: any) {
-    return { id: payload.sub, login: payload.username }
+    return { id: payload.sub, username: payload.username }
   }
 }

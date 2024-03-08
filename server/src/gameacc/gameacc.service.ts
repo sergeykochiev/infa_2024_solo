@@ -13,10 +13,10 @@ export class GameAccountService {
         private readonly dataSource: DataSource
     ) {}
 
-    async findMany(login: string): Promise<Array<GameAccount> | null> {
+    async findMany(username: string): Promise<Array<GameAccount> | null> {
         return await this.gameAccountRepository.find({
             where: {
-                user: { login: login }
+                user: { username: username }
             }
         })
     }

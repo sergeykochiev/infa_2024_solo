@@ -1,8 +1,11 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Request, Response, UseGuards } from '@nestjs/common';
 import { PullService } from './pull.service';
 import { AuthGuard } from '@nestjs/passport';
 import { BannerType } from './entity/pull.entity';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { Request as RequestType } from 'express';
+import { User } from 'src/user/entity/user.entity';
+import { Response as ResponseExpress, Request as RequestExpress } from 'express';
 
 @Controller('pull')
 export class PullController {
@@ -10,19 +13,22 @@ export class PullController {
 
     @UseGuards(JwtAuthGuard)
     @Get(':uid/:type')
-    async getPulls(@Param('uid') uid: number, @Param('type') type: BannerType, @Request() request) {
-        console.log(uid, type)
-        console.log(request.cookies)
-        return { result: await this.pullService.getMany(uid, type, request.user.login) }
+    async getPulls(
+        @Param('uid') uid: number,
+        @Param('type') type: BannerType,
+        @Request() request,
+        @Response() response: ResponseExpress
+    ) {
+        response.status(HttpStatus.OK).json({ result: await this.pullService.getMany(uid, type, request.user.username) })
     }
 
     @UseGuards(JwtAuthGuard)
     @Post()
-    async savePulls(@Body('authkey') authkey: string, @Request() req) {
+    async savePulls(@Body('authkey') authkey: string, @Request() request, @Response() response: ResponseExpress) {
         if (!authkey) {
             throw new HttpException('no authkey specified', HttpStatus.BAD_REQUEST)
         }
-        const newPullsCount = await this.pullService.createMany(authkey, req.user.login)
-        return { message: `successfully created ${newPullsCount} pulls` }
+        const newPullsCount = await this.pullService.createMany(authkey, request.user.login)
+        response.status(HttpStatus.CREATED).json({ result: `successfully created ${newPullsCount} pulls` })
     }
 }

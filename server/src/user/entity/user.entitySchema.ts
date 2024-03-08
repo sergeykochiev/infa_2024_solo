@@ -10,7 +10,7 @@ export const UserSchema = new EntitySchema<User>({
             primary: true,
             generated: true,
         },
-        login: {
+        username: {
             type: String,
             unique: true
         },

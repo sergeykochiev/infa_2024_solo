@@ -6,7 +6,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const Button: FC<ButtonProps> = ({ onclick, ...props }) => {
-    return <button onClick={onclick} className='flex min-w-32 justify-center font-bold p-4 bg-red-300 rounded-xl px-6 disabled:bg-red-50' {...props}/>
+    return <button onClick={onclick} className='flex min-w-32 justify-center text-white font-bold p-3 px-4 bg-black rounded-xl disabled:bg-gray-900' {...props}/>
 }
 
 export default Button

@@ -3,14 +3,14 @@ import { CreateUserDto } from "../dto/createUserDto"
 
 export class User {
     public id: number
-    public login: string
+    public username: string
     public password: string
 
     constructor(createUserDto?: CreateUserDto) {
         if (!createUserDto) {
             return
         }
-        this.login = createUserDto.login
+        this.username = createUserDto.username
         this.password = createUserDto.password
     }
 }

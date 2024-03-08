@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entity/user.entity';
 import { DataSource, Repository } from 'typeorm';
@@ -15,17 +15,17 @@ export class UserService {
         private readonly dataSource: DataSource
     ) {}
 
-    async findOne(login: string): Promise<User | void> {
+    async findOne(username: string): Promise<User | void> {
         return await this.userRepository.findOne({
             where: {
-                login: login
+                username: username
             }
         })
     }
 
-    async createOne(createUserDto: CreateUserDto): Promise<void> {
-        if (await this.findOne(createUserDto.login)) {
-            throw new Error('Login already exists')
+    async createOne(createUserDto: CreateUserDto): Promise<User> {
+        if (await this.findOne(createUserDto.username)) {
+            throw new HttpException('Login already exists', HttpStatus.CONFLICT)
         }
         const password = await bcrypt.hash(createUserDto.password, 10)
         const user = new User({
@@ -35,6 +35,7 @@ export class UserService {
         await this.dataSource.transaction(async (manager) => {
             await manager.save(user)
         })
+        return user
     }
 
     async getAll(): Promise<Array<User>> {

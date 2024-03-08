@@ -1,9 +1,9 @@
 import type { FC } from 'react'
 import { useState } from 'react'
-import Rarity from '../types/rarity.type'
+import { RarityType } from '../types'
 
 interface DropdownProps {
-    value: Rarity
+    value: RarityType
     setValue: any,
 }
 

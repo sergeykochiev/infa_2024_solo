@@ -8,11 +8,10 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
     mode?: 'header' | 'plain'
 }
 
-const Input: FC<InputProps> = ({ type, placeholder, value, setValue, mode, ...props }) => {
-    return <div className='flex-grow h-auto flex-1 self-stretch'>
-        <input
+const Input: FC<InputProps> = ({ placeholder, value, setValue, type, mode, ...props }) => {
+    return <input
             className={
-                `bg-white rounded-xl px-6 h-full w-full focus:outline focus:outline-2
+                `bg-gray-200 rounded-xl p-3 px-4 focus:outline focus:outline-2 flex-1
                 ${mode == 'header' && 'text-xl font-bold'}`
             } 
             type={type ? type : 'text'}
@@ -21,7 +20,6 @@ const Input: FC<InputProps> = ({ type, placeholder, value, setValue, mode, ...pr
             onChange={(e) => setValue(e.target.value)}
             {...props}
         />
-    </div>
 }
 
 export default Input

@@ -114,9 +114,9 @@ export class PullService {
         return await this.fetchPulls(lastId, params, gameAccount, prevPulls)
     }
 
-    async createMany(authkey: string, login: string): Promise<number> {
+    async createMany(authkey: string, username: string): Promise<number> {
         console.log('1')
-        const user = await this.userService.findOne(login)
+        const user = await this.userService.findOne(username)
         if (!user) {
             console.log('no user')
             return
@@ -165,11 +165,11 @@ export class PullService {
         return pulls.length
     }
 
-    async getMany(uid: number, type: BannerType, login: string): Promise<Array<Pull> | undefined> {
+    async getMany(uid: number, type: BannerType, username: string): Promise<Array<Pull> | undefined> {
         return await this.pullRepository.find({
             where: {
                 bannerType: type,
-                gameAccount: { uid: uid, user: { login: login } },
+                gameAccount: { uid: uid, user: { username: username } },
             }
         })
     }
