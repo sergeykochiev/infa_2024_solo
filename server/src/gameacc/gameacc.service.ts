@@ -40,4 +40,13 @@ export class GameAccountService {
     async getAll(): Promise<Array<GameAccount>> {
         return await this.gameAccountRepository.find()
     }
+
+    async deleteOne(uid: number, username: string): Promise<void> {
+        await this.gameAccountRepository.remove(await this.gameAccountRepository.findOne({
+            where: {
+                uid: uid,
+                user: { username: username }
+            }
+        }))
+    }
 }

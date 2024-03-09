@@ -38,13 +38,13 @@ const fetchPulls = async (authkey: string, type: BannerType): Promise<Array<Pull
   return pulls.result
 }
 
-const login = async (): Promise<User | Response> => {
+const login = async (): Promise<User | null> => {
   const res = await fetch('/api/auth/login', {
     method: 'GET'
   })
   if (!res.ok) {
     alert('Unauthorized')
-    return redirect('/login')
+    return null
   }
   const user = await res.json()
   return user.result
@@ -54,6 +54,13 @@ const router = createBrowserRouter([
   {
     path: '',
     element: <Root/>,
+    loader: async () => {
+      const user = await login()
+      if (!user) {
+        return null
+      }
+      return redirect('profile/uids')
+    },
     errorElement: <ErrorPage/>
   },
   {

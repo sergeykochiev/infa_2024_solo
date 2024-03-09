@@ -17,19 +17,20 @@ export const PullSchema = new EntitySchema<Pull>({
             type: Number,
         },
         timestamp: {
-            type: Date
+            type: "timestamp"
         }
     },
     relations: {
         gameAccount: {
             type: 'many-to-one',
             target: 'GameAccount',
+            cascade: true,
+            onDelete: 'CASCADE'
         },
         item: {
             type: 'many-to-one',
             target: 'Item',
-            cascade: true,
-            eager: true
+            eager: true,
         }
     }
 })

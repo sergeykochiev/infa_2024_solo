@@ -24,11 +24,11 @@ export class PullController {
 
     @UseGuards(JwtAuthGuard)
     @Post()
-    async savePulls(@Body('authkey') authkey: string, @Request() request, @Response() response: ResponseExpress) {
-        if (!authkey) {
-            throw new HttpException('no authkey specified', HttpStatus.BAD_REQUEST)
+    async savePulls(@Body('hoyoUrl') hoyoUrl: string, @Request() request, @Response() response: ResponseExpress) {
+        if (!hoyoUrl) {
+            throw new HttpException('no url specified', HttpStatus.BAD_REQUEST)
         }
-        const newPullsCount = await this.pullService.createMany(authkey, request.user.login)
-        response.status(HttpStatus.CREATED).json({ result: `successfully created ${newPullsCount} pulls` })
+        const newPullsCount = await this.pullService.createMany(hoyoUrl, request.user.login)
+        response.status(HttpStatus.CREATED).json({ result: newPullsCount })
     }
 }

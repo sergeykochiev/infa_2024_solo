@@ -11,6 +11,7 @@ import { fetchData } from 'src/pull/const';
 import { HelperService } from 'src/helper/helper.service';
 import { ItemService } from 'src/item/item.service';
 import { Item } from 'src/item/entity/item.entity';
+import { URLSearchParams } from 'url';
 
 interface fetchParams {
     lang: 'en',
@@ -38,17 +39,23 @@ export class PullService {
         private readonly userService: UserService,
         private readonly dataSource: DataSource,
         private readonly helper: HelperService,
-        private readonly itemService: ItemService
     ) {}
 
     handleHoyoRetcode(response: hoyoResponse) {
         if (response.retcode == 0) {
             return
         }
+        // 108 lang error
+
         this.helper.throwServerError(
             'Error with Hoyo server',
             `${response.retcode}: ${response.message}`
         )
+    }
+
+    parseHoyoUrl(hoyoUrl: string) {
+        const hoyoParams = new URLSearchParams(hoyoUrl)
+        return hoyoParams.get('authkey')
     }
 
     async fetchUidByAuthkey(authkey: string): Promise<number | void> { // ok
@@ -72,7 +79,7 @@ export class PullService {
     }
 
     async fetchPulls(
-        lastId: number | void | undefined,
+        lastId: number | undefined,
         params: fetchParams,
         gameAccount: GameAccount,
         pulls: Array<Pull> = []
@@ -91,7 +98,7 @@ export class PullService {
             return prevPulls
         }
         for (const pull of parsed.data.list) {
-            if (lastId && pull.item_id == lastId) {
+            if (lastId && Number(pull.id) == lastId) {
                 return prevPulls
             }
             prevPulls.push(new Pull({
@@ -114,7 +121,8 @@ export class PullService {
         return await this.fetchPulls(lastId, params, gameAccount, prevPulls)
     }
 
-    async createMany(authkey: string, username: string): Promise<number> {
+    async createMany(hoyoUrl: string, username: string): Promise<number> {
+        const authkey = this.parseHoyoUrl(hoyoUrl)
         console.log('1')
         const user = await this.userService.findOne(username)
         if (!user) {
@@ -146,6 +154,9 @@ export class PullService {
                 end_id: 0
             }
             const lastPull = await this.pullRepository.findOne({
+                order: {
+                    id: 'DESC'
+                },
                 where: {
                     bannerType: type,
                     gameAccount: { uid: uid }
@@ -155,12 +166,11 @@ export class PullService {
             if (lastPull) {
                 lastId = lastPull.id
             }
+            console.log(lastId)
             pulls = pulls.concat(await this.fetchPulls(lastId, params, gameAcc))
             console.log(`fetched, total now ${pulls.length}`)
         }
-        await this.dataSource.transaction(async (manager) => {
-            await manager.save(pulls)
-        })
+        await this.pullRepository.save(pulls)
         console.log('done')
         return pulls.length
     }

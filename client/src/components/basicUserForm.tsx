@@ -22,6 +22,6 @@ export const UserForm: FC<UserFormProps> = ({ name, onSubmit }) => {
         </div>
         <Input placeholder="Username" value={username} setValue={setUsername}/>
         <Input placeholder="Password" value={password} setValue={setPassword}/>
-        <Button onclick={() => submit(username, password)}>{name}</Button>
+        <Button onClick={() => submit(username, password)}>{name}</Button>
     </div>
 }
