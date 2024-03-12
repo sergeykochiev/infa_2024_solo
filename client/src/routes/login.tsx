@@ -28,12 +28,14 @@ export const LoginPage: FC = () => {
         }
         // const user = await res.json()
         // localStorage.setItem('username', user.username)
-        goto("/profile/uids")
+        goto("/profile")
         return
     }
 
     return <Wrapper>
         <UserForm name="Login" onSubmit={submit}/>
-        <Link to='/signup'>sign up</Link>
+        <div className="grid place-items-center">
+            <Link to='/signup'>sign up</Link>
+        </div>
     </Wrapper>
 }

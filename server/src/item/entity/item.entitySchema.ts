@@ -1,5 +1,5 @@
-import { EntitySchema } from "typeorm";
-import { Item } from "./item.entity";
+import { EntitySchema, ManyToMany } from "typeorm";
+import { Item, ItemType, RankType } from "./item.entity";
 
 export const ItemSchema = new EntitySchema<Item>({
     name: 'Item',
@@ -13,10 +13,21 @@ export const ItemSchema = new EntitySchema<Item>({
             type: String
         },
         type: {
-            type: String
+            type: 'enum',
+            enum: ItemType
         },
         rank: {
-            type: Number
+            type: 'enum',
+            enum: RankType
+        }
+    },  
+    relations: {
+        banners: {
+            type: 'many-to-many',
+            target: 'Banner',
+            joinTable: true,
+            eager: true,
+            nullable: true
         }
     }
 })

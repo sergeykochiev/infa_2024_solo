@@ -22,4 +22,8 @@ export class ItemService {
             }
         })
     }
+
+    async save(item: Item): Promise<void> {
+        await this.itemRepository.save(item)
+    }
 }

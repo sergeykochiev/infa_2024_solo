@@ -12,6 +12,8 @@ import { HelperService } from 'src/helper/helper.service';
 import { ItemService } from 'src/item/item.service';
 import { Item } from 'src/item/entity/item.entity';
 import { URLSearchParams } from 'url';
+import { Banner } from 'src/banner/entity/banner.entity';
+import { BannerService } from 'src/banner/banner.service';
 
 interface fetchParams {
     lang: 'en',
@@ -37,7 +39,8 @@ export class PullService {
         private readonly pullRepository: Repository<Pull>,
         private readonly gameAccountService: GameAccountService,
         private readonly userService: UserService,
-        private readonly dataSource: DataSource,
+        private readonly itemService: ItemService,
+        private readonly bannerService: BannerService,
         private readonly helper: HelperService,
     ) {}
 
@@ -101,19 +104,25 @@ export class PullService {
             if (lastId && Number(pull.id) == lastId) {
                 return prevPulls
             }
-            prevPulls.push(new Pull({
-                id: pull.id,
-                bannerId: pull.gacha_id,
-                timestamp: pull.time,
-                bannerType: pull.gacha_type,
-                gameAccount: gameAccount,
-                item: new Item({
-                    id: pull.item_id,
-                    name: pull.name,
-                    type: pull.item_type,
-                    rank: pull.rank_type
-                })
-            }))
+            const item = new Item(
+                pull.item_id,
+                pull.name,
+                pull.item_type,
+                pull.rank_type
+            )
+            const banner = new Banner(
+                pull.gacha_id,
+                pull.gacha_type
+            )
+            // await this.bannerService.save(banner)
+            // await this.itemService.save(item)
+            prevPulls.push(new Pull(
+                pull.id,
+                pull.time,
+                gameAccount,
+                item,
+                banner
+            ))
         }
         params.end_id = prevPulls.slice(-1)[0].id
         await new Promise(e => setTimeout(e, 250))
@@ -137,11 +146,9 @@ export class PullService {
         }
         let gameAcc = await this.gameAccountService.findOne(uid)
         if (!gameAcc) {
-            gameAcc = await this.gameAccountService.createOne({
-                uid: uid,
-                user: user
-            })
+            gameAcc = new GameAccount(uid, user)
         }
+        await this.gameAccountService.save(gameAcc)
         console.log('gameacc ok')
         const bannerTypes: Array<BannerType> = [1, 11, 12]
         let pulls: Array<Pull> = []
@@ -158,7 +165,7 @@ export class PullService {
                     id: 'DESC'
                 },
                 where: {
-                    bannerType: type,
+                    banner: { type: type },
                     gameAccount: { uid: uid }
                 }
             })
@@ -178,7 +185,7 @@ export class PullService {
     async getMany(uid: number, type: BannerType, username: string): Promise<Array<Pull> | undefined> {
         return await this.pullRepository.find({
             where: {
-                bannerType: type,
+                banner: { type: type },
                 gameAccount: { uid: uid, user: { username: username } },
             }
         })

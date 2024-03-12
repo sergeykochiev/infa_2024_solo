@@ -4,6 +4,7 @@ import { GameAccountSchema } from './entity/gameacc.entitySchema';
 import { CreateGameAccountDto } from './dto/createGameAccountDto';
 import { DataSource, Repository } from 'typeorm';
 import { GameAccount } from './entity/gameacc.entity';
+import { User } from 'src/user/entity/user.entity';
 
 @Injectable()
 export class GameAccountService {
@@ -29,14 +30,6 @@ export class GameAccountService {
         })
     }
 
-    async createOne(createGameAccountDto: CreateGameAccountDto): Promise<GameAccount> {
-        const gameAccount = new GameAccount(createGameAccountDto)
-        await this.dataSource.transaction(async (manager) => {
-            await manager.save(gameAccount)
-        })
-        return gameAccount
-    }
-
     async getAll(): Promise<Array<GameAccount>> {
         return await this.gameAccountRepository.find()
     }
@@ -48,5 +41,9 @@ export class GameAccountService {
                 user: { username: username }
             }
         }))
+    }
+
+    async save(gameAcc: GameAccount): Promise<void> {
+        await this.gameAccountRepository.save(gameAcc)
     }
 }

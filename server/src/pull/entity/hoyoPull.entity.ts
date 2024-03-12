@@ -1,3 +1,4 @@
+import { ItemType, RankType } from "src/item/entity/item.entity"
 import { BannerType } from "./pull.entity"
 
 export class HoyoPull {
@@ -9,7 +10,7 @@ export class HoyoPull {
     public time: string
     public name: string
     public lang: string
-    public item_type: 'Character' | 'Light Cone'
-    public rank_type: 3 | 4 | 5
+    public item_type: ItemType
+    public rank_type: RankType
     public id: number
 }

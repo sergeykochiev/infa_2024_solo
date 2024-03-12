@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { BannerService } from 'src/banner/banner.service';
 import { GameAccountService } from 'src/gameacc/gameacc.service';
 import { ItemService } from 'src/item/item.service';
 import { PullService } from 'src/pull/pull.service';
@@ -10,7 +11,8 @@ export class TestController {
         private readonly userService: UserService,
         private readonly gameAccountService: GameAccountService,
         private readonly pullService: PullService,
-        private readonly itemService: ItemService
+        private readonly itemService: ItemService,
+        private readonly bannerService: BannerService
     ) {}
 
     @Get('users')
@@ -33,4 +35,8 @@ export class TestController {
         return { result: await this.itemService.getAll() }
     }
 
+    @Get('banners')
+    async getBanners() {
+        return { result: await this.bannerService.getAll() }
+    }
 }

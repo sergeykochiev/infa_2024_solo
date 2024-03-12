@@ -23,6 +23,7 @@ import { PullService } from './pull/pull.service';
 import { GameAccountService } from './gameacc/gameacc.service';
 import { TestModule } from './test/test.module';
 import { ItemModule } from './item/item.module';
+import { BannerModule } from './banner/banner.module';
 
 @Module({
   imports: [
@@ -40,7 +41,8 @@ import { ItemModule } from './item/item.module';
     }),
     HelperModule,
     TestModule,
-    ItemModule
+    ItemModule,
+    BannerModule
   ],
   controllers: [AppController],
   providers: [AppService],

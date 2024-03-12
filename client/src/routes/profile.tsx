@@ -42,12 +42,15 @@ export const ProfilePage: FC = () => {
     // const user = localStorage.getItem('username')
 
     return <PageWrapper>
-        <div className="flex justify-between items-center gap-4">
+        <div className="lg:hidden grid place-items-center">
+            {user && user.username}
+        </div>
+        <div className="flex lg:justify-between justify-center items-center gap-4">
             <H1>HSR History</H1>
-            <p>{user && user.username}</p>
+            <p className="hidden lg:block">{user && user.username}</p>
         </div>
         <p>Paste our Hoyoverse wish URL to the field below to retrieve wishes from Star Rail servers</p>
-        <div className="flex gap-4">
+        <div className="flex gap-4 lg:flex-row flex-col">
             <Input placeholder="Hoyoverse URL" value={url} setValue={setUrl}/>
             <Button onClick={() => savePulls(url)}>Fetch</Button>
         </div>

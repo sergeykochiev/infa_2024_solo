@@ -6,16 +6,22 @@ export type GameAccount = {
     id: number,
     uid: number
 }
+export type Banner = {
+    id: number,
+    type: BannerType,
+    name?: string
+}
 export type PullType = {
     id: number,
     bannerId: number,
-    bannerType: BannerType,
+    banner: Banner,
     timestamp: string,
     item: {
         id: number,
         name: string,
         type: ItemType,
-        rank: RankType
+        rank: RankType,
+        banners: Array<Banner>
     }
 }
 export type User = {

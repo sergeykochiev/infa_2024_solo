@@ -7,6 +7,7 @@ import { UserModule } from 'src/user/user.module';
 import { GameAccountModule } from 'src/gameacc/gameacc.module';
 import { HelperModule } from 'src/helper/helper.module';
 import { ItemModule } from 'src/item/item.module';
+import { BannerModule } from 'src/banner/banner.module';
 
 @Module({
   imports: [
@@ -14,6 +15,8 @@ import { ItemModule } from 'src/item/item.module';
     UserModule,
     GameAccountModule,
     HelperModule,
+    ItemModule,
+    BannerModule,
     ItemModule
   ],
   providers: [PullService],

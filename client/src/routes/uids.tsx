@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { useLoaderData } from "react-router";
+import { Outlet, useLoaderData, useNavigate, useNavigation, useOutlet } from "react-router";
 import { GameAccount } from "../types";
 import { Uid } from "../components/uid";
 import { PageWrapper } from "../components/pageWrapper";
@@ -7,6 +7,8 @@ import { H1 } from "../components/header1";
 
 export const UidsPage: FC = () => {
     const [gameaccs, setGameaccs] = useState<Array<GameAccount>>(useLoaderData() as Array<GameAccount>)
+    const simple = useOutlet() == null
+    const goto = useNavigate()
 
     const deleteF = async (uid: number): Promise<void> => {
         const res = await fetch(`/api/gameacc?uid=${uid}`, {
@@ -24,8 +26,13 @@ export const UidsPage: FC = () => {
         return
     }
 
-    return <div className="flex flex-col gap-4">
-        <H1>Uids</H1>
-        {gameaccs && gameaccs.map(acc => <Uid key={acc.id} uid={acc.uid} deleteF={deleteF}/>)}
+    return <div className="flex gap-4">
+        <div className={`flex flex-1 flex-col gap-4 ${!simple ? 'hidden lg:flex' : ''}`}>
+            <div className="w-full flex justify-center lg:justify-normal">
+                <H1 >Uids</H1>
+            </div>
+            {gameaccs && gameaccs.map(acc => <Uid key={acc.id} uid={acc.uid} deleteF={deleteF} simple={simple}/>)}
+        </div>
+        <Outlet/>
     </div>
 }

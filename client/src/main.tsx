@@ -59,7 +59,8 @@ const router = createBrowserRouter([
       if (!user) {
         return null
       }
-      return redirect('profile/uids')
+      // return redirect('profile')
+      return null
     },
     errorElement: <ErrorPage/>
   },
@@ -77,17 +78,19 @@ const router = createBrowserRouter([
     loader: login,
     children: [
       {
-        path: 'uids',
+        path: '',
         element: <UidsPage/>,
-        loader: fetchUids
+        loader: fetchUids,
+        children: [
+          {
+            path: ':uid/:type',
+            element: <PullsPage/>,
+            loader: async ({ params }): Promise<Array<PullType> | null> => {
+              return await fetchPulls(params.uid as string, params.type as unknown as BannerType)
+            },
+          }, 
+        ]
       },
-      {
-        path: ':uid/:type',
-        element: <PullsPage/>,
-        loader: async ({ params }): Promise<Array<PullType> | null> => {
-          return await fetchPulls(params.uid as string, params.type as unknown as BannerType)
-        },
-      }, 
     ]
   }
 ])

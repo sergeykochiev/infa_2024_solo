@@ -26,6 +26,8 @@ export const SignUpPage: FC = () => {
 
     return <Wrapper>
         <UserForm name="Sign up" onSubmit={submit}/>
-        <Link to='/login'>log in</Link>
+        <div className="grid place-items-center">
+            <Link to='/login'>log in</Link>
+        </div>
     </Wrapper>   
 }
