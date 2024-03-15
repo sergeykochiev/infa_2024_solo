@@ -22,6 +22,13 @@ export class AuthController {
     }
 
     @UseGuards(JwtAuthGuard)
+    @Get('logout')
+    async logout(@Response() response: ResponseExpress) {
+        response.clearCookie('jwt')
+        response.status(HttpStatus.OK).send()
+    }
+
+    @UseGuards(JwtAuthGuard)
     @Get('login')
     async initLogin(@Request() request: RequestExpress, @Response() response: ResponseExpress) {  
         response.status(HttpStatus.OK).json({ result: request.user })

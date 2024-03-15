@@ -2,9 +2,10 @@ import { FC, useState } from "react";
 import { H1 } from "../components/header1";
 import Input from "../components/input";
 import Button from "../components/button";
-import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import { PageWrapper } from "../components/pageWrapper";
 import { User } from "../types";
+import { LinkButton } from "../components/linkButton";
 
 export const ProfilePage: FC = () => {
     const goto = useNavigate()
@@ -12,7 +13,7 @@ export const ProfilePage: FC = () => {
     const user: User | null = useLoaderData() as User | null
 
     const savePulls = async (url: string): Promise<void> => {
-        const res = await fetch('/api/pull', {
+        const res = await fetch('api/pull', {
             method: 'POST',
             credentials: 'same-origin',
             headers: {
@@ -30,6 +31,23 @@ export const ProfilePage: FC = () => {
         alert(`Saved ${pullCount.result} pulls`)
         return
     }
+
+    const logout = async (): Promise<void> => {
+        const res = await fetch('api/auth/logout', {
+            method: 'GET',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        if (!res.ok) {
+            alert(`Unhandled error`)
+            return
+        }
+        goto('/login')
+        return
+    }
+
     // useEffect(() => {
     //     if (!user) {
     //         goto('/login')
@@ -43,11 +61,15 @@ export const ProfilePage: FC = () => {
 
     return <PageWrapper>
         <div className="lg:hidden grid place-items-center">
-            {user && user.username}
+            <Button>Logout</Button>
+            <p>{user && user.username}</p>
         </div>
         <div className="flex lg:justify-between justify-center items-center gap-4">
             <H1>HSR History</H1>
-            <p className="hidden lg:block">{user && user.username}</p>
+            <div className="flex gap-4 items-center">
+                <LinkButton deletion={true} onClick={logout}>logout</LinkButton>
+                <p className="hidden lg:block">{user && user.username}</p>
+            </div>
         </div>
         <p>Paste our Hoyoverse wish URL to the field below to retrieve wishes from Star Rail servers</p>
         <div className="flex gap-4 lg:flex-row flex-col">

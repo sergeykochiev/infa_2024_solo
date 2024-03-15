@@ -16,7 +16,7 @@ export const PullsPage: FC = () => {
     const paths = location.pathname.split('/')
     const bannerType = paths[paths.length - 1]
     
-    return <div className="flex flex-col w-full gap-4">
+    return <div className={`flex flex-col w-full gap-4 lg:col-span-6`}>
         <div className="flex justify-between items-center gap-4">
             <div className='justify-start lg:hidden flex-1 flex'>
                 <Link className="hover:underline" to='../'>{'< back'}</Link>

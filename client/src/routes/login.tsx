@@ -6,15 +6,17 @@ import { Wrapper } from "../components/mainWrapper";
 export const LoginPage: FC = () => {
     const goto = useNavigate()
 
-    const submit = async (username: string, password: string): Promise<void> => {
+    const submit = async (e: React.FormEvent): Promise<void> => {
+        e.preventDefault()
+	    const formData = new FormData(e.target as HTMLFormElement)
         const res = await fetch('/api/auth/login', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                username: username,
-                password: password
+                username: formData.get('username'),
+                password: formData.get('password')
             }),
             credentials: "include"
         })
@@ -33,7 +35,7 @@ export const LoginPage: FC = () => {
     }
 
     return <Wrapper>
-        <UserForm name="Login" onSubmit={submit}/>
+        <UserForm name="Login" submit={submit}/>
         <div className="grid place-items-center">
             <Link to='/signup'>sign up</Link>
         </div>
