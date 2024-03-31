@@ -26,7 +26,7 @@ const fetchUids = async (): Promise<Array<GameAccount> | null> => {
 }
 
 const fetchPulls = async (authkey: string, type: BannerType): Promise<Array<PullType> | null> => {
-  const res = await fetch(`/api/pull/${authkey}/${type}`, {
+  const res = await fetch(`api/pull/${authkey}/${type}`, {
     credentials: 'same-origin',
     method: 'GET'
   })
@@ -39,7 +39,7 @@ const fetchPulls = async (authkey: string, type: BannerType): Promise<Array<Pull
 }
 
 const login = async (): Promise<User | null> => {
-  const res = await fetch('/api/auth/login', {
+  const res = await fetch(`api/auth/login`, {
     method: 'GET'
   })
   if (!res.ok) {
@@ -52,35 +52,44 @@ const login = async (): Promise<User | null> => {
 
 const router = createBrowserRouter([
   {
-    path: '',
+    path: '/',
     element: <Root/>,
     loader: async () => {
       const user = await login()
       if (!user) {
         return null
       }
-      // return redirect('profile')
-      return null
+      return redirect('/profile')
     },
     errorElement: <ErrorPage/>
   },
   {
     path: 'login',
-    element: <LoginPage/>
+    element: <LoginPage/>,
+    errorElement: <ErrorPage/>
   },
   {
     path: 'signup',
-    element: <SignUpPage/>
+    element: <SignUpPage/>,
+    errorElement: <ErrorPage/>
   },
   {
     path: 'profile',
     element: <ProfilePage/>,
-    loader: login,
+    loader: async () => {
+      const user = await login()
+      if (!user) {
+        return redirect('/login')
+      }
+      return user
+    },
+    errorElement: <ErrorPage/>,
     children: [
       {
         path: '',
         element: <UidsPage/>,
         loader: fetchUids,
+        errorElement: <ErrorPage/>,
         children: [
           {
             path: ':uid/:type',

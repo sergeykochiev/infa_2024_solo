@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { H1 } from "../components/header1";
 import Input from "../components/input";
 import Button from "../components/button";
-import { Link, Outlet, useLoaderData, useNavigate } from "react-router-dom";
+import { Outlet, useLoaderData, useNavigate } from "react-router-dom";
 import { PageWrapper } from "../components/pageWrapper";
 import { User } from "../types";
 import { LinkButton } from "../components/linkButton";
@@ -13,7 +13,7 @@ export const ProfilePage: FC = () => {
     const user: User | null = useLoaderData() as User | null
 
     const savePulls = async (url: string): Promise<void> => {
-        const res = await fetch('api/pull', {
+        const res = await fetch(`api/pull`, {
             method: 'POST',
             credentials: 'same-origin',
             headers: {
@@ -33,7 +33,7 @@ export const ProfilePage: FC = () => {
     }
 
     const logout = async (): Promise<void> => {
-        const res = await fetch('api/auth/logout', {
+        const res = await fetch(`api/auth/logout`, {
             method: 'GET',
             credentials: 'same-origin',
             headers: {

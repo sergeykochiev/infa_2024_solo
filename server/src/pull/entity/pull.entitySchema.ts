@@ -1,6 +1,5 @@
 import { EntitySchema } from "typeorm";
-import { BannerType, Pull } from "./pull.entity";
-import { BigInt } from "postgres";
+import { Pull } from "./pull.entity";
 
 export const PullSchema = new EntitySchema<Pull>({
     name: 'Pull',

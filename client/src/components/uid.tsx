@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState } from "react"
+import { FC, useState } from "react"
 import { useLocation, useNavigate } from "react-router"
 import Button from "./button"
 

@@ -1,5 +1,5 @@
 import { ItemType, RankType } from "src/item/entity/item.entity"
-import { BannerType } from "./pull.entity"
+import { BannerType } from "src/common/types/types"
 
 export class HoyoPull {
     public uid: number

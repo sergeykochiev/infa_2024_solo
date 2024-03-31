@@ -1,6 +1,6 @@
 import { EntitySchema } from "typeorm"
 import { Banner } from "./banner.entity"
-import { BannerType } from "src/pull/entity/pull.entity"
+import { BannerType } from "../../common/types/types"
 
 export const BannerSchema = new EntitySchema<Banner>({
     name: 'Banner',

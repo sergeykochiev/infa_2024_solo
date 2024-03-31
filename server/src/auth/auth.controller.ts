@@ -36,6 +36,9 @@ export class AuthController {
 
     @Post('signup')
     async singup(@Body() createUserDto: CreateUserDto, @Response() response: ResponseExpress) {
+        if (!createUserDto.password || !createUserDto.username) {
+            throw new HttpException('no userdata provided', HttpStatus.BAD_REQUEST)
+        }
         console.log(createUserDto.username)
         await this.authService.signup(createUserDto)
         response.status(HttpStatus.CREATED).send()

@@ -9,7 +9,7 @@ export const LoginPage: FC = () => {
     const submit = async (e: React.FormEvent): Promise<void> => {
         e.preventDefault()
 	    const formData = new FormData(e.target as HTMLFormElement)
-        const res = await fetch('/api/auth/login', {
+        const res = await fetch(`api/auth/login`, {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json"

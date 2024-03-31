@@ -1,5 +1,4 @@
-import { Item } from "src/item/entity/item.entity";
-import { BannerType } from "src/pull/entity/pull.entity"
+import { BannerType } from "src/common/types/types";
 
 export class Banner {
     constructor(

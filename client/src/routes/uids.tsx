@@ -1,17 +1,15 @@
 import { FC, useState } from "react";
-import { Outlet, useLoaderData, useNavigate, useNavigation, useOutlet } from "react-router";
+import { Outlet, useLoaderData, useOutlet } from "react-router";
 import { GameAccount } from "../types";
 import { Uid } from "../components/uid";
-import { PageWrapper } from "../components/pageWrapper";
 import { H1 } from "../components/header1";
-import { Link } from "react-router-dom";
 
 export const UidsPage: FC = () => {
     const [gameaccs, setGameaccs] = useState<Array<GameAccount>>(useLoaderData() as Array<GameAccount>)
     const simple = useOutlet() == null
 
     const deleteF = async (uid: number): Promise<void> => {
-        const res = await fetch(`/api/gameacc?uid=${uid}`, {
+        const res = await fetch(`api/gameacc?uid=${uid}`, {
             method: 'DELETE',
             credentials: "include",
         })

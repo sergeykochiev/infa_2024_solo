@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Wrapper } from "../components/mainWrapper";
 import { H1 } from "../components/header1";
 import Button from "../components/button";

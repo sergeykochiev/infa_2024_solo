@@ -1,11 +1,8 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Request, Response, UseGuards } from '@nestjs/common';
 import { PullService } from './pull.service';
-import { AuthGuard } from '@nestjs/passport';
-import { BannerType } from './entity/pull.entity';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
-import { Request as RequestType } from 'express';
-import { User } from 'src/user/entity/user.entity';
 import { Response as ResponseExpress, Request as RequestExpress } from 'express';
+import { BannerType } from 'src/common/types/types';
 
 @Controller('pull')
 export class PullController {

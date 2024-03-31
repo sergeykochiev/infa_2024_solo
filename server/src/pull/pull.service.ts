@@ -1,5 +1,4 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { BannerType, Pull } from './entity/pull.entity';
 import { HoyoPull } from './entity/hoyoPull.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
@@ -14,6 +13,8 @@ import { Item } from 'src/item/entity/item.entity';
 import { URLSearchParams } from 'url';
 import { Banner } from 'src/banner/entity/banner.entity';
 import { BannerService } from 'src/banner/banner.service';
+import { BannerType } from 'src/common/types/types';
+import { Pull } from './entity/pull.entity';
 
 interface fetchParams {
     lang: 'en',
