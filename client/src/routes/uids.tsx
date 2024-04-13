@@ -6,10 +6,11 @@ import { H1 } from "../components/header1";
 
 export const UidsPage: FC = () => {
     const [gameaccs, setGameaccs] = useState<Array<GameAccount>>(useLoaderData() as Array<GameAccount>)
+    console.log(gameaccs)
     const simple = useOutlet() == null
 
     const deleteF = async (uid: number): Promise<void> => {
-        const res = await fetch(`api/gameacc?uid=${uid}`, {
+        const res = await fetch(`/api/gameacc?uid=${uid}`, {
             method: 'DELETE',
             credentials: "include",
         })
@@ -29,7 +30,7 @@ export const UidsPage: FC = () => {
             <div className="w-full flex justify-center lg:justify-normal">
                 <H1>Uids</H1>
             </div>
-            {gameaccs && gameaccs.map(acc => <Uid key={acc.id} uid={acc.uid} deleteF={deleteF} simple={simple}/>)}
+            {gameaccs ? gameaccs.map(acc => <Uid key={acc.id} uid={acc.uid} deleteF={deleteF} simple={simple}/>) : <div className="w-full h-[200px] flex justify-center items-center text-[16px]">No uid added</div>}
             {/* {!simple && <Link to="/profile">go back</Link>} */}
         </div>
         <Outlet/>

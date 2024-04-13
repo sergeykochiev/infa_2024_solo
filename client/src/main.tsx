@@ -23,8 +23,10 @@ const fetchApiFromLoader = async (url: string): Promise<object | object[] | null
     alert('Unhandled error')
     return null
   }
-  const pulls = await res.json()
-  return pulls.result
+  console.log(res)
+  const data = await res.json()
+  console.log(data)
+  return data.result
 }
 
 const router = createBrowserRouter([
@@ -46,20 +48,20 @@ const router = createBrowserRouter([
   {
     path: 'profile',
     element: <ProfilePage/>,
-    loader: async () => await fetchApiFromLoader("api/user/current"),
+    loader: async () => await fetchApiFromLoader("/api/user/current"),
     errorElement: <ErrorPage/>,
     children: [
       {
         path: '',
         element: <UidsPage/>,
-        loader: async () => await fetchApiFromLoader("api/gameacc"),
+        loader: async () => await fetchApiFromLoader("/api/gameacc"),
         errorElement: <ErrorPage/>,
         children: [
           {
             path: ':uid/:type',
             element: <PullsPage/>,
             loader: async ({ params }): Promise<any> => {
-              return await fetchApiFromLoader(`api/pull/${params.uid}/${params.type}`)
+              return await fetchApiFromLoader(`/api/pull/${params.uid}/${params.type}`)
             },
           }, 
         ]

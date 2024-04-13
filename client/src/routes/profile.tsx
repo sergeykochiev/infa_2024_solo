@@ -13,7 +13,7 @@ export const ProfilePage: FC = () => {
     const user: User | null = useLoaderData() as User | null
 
     const savePulls = async (url: string): Promise<void> => {
-        const res = await fetch(`api/pull`, {
+        const res = await fetch(`/api/pull`, {
             method: 'POST',
             credentials: 'same-origin',
             headers: {
@@ -33,7 +33,7 @@ export const ProfilePage: FC = () => {
     }
 
     const logout = async (): Promise<void> => {
-        const res = await fetch(`api/auth/logout`, {
+        const res = await fetch(`/api/auth/logout`, {
             method: 'GET',
             credentials: 'same-origin',
             headers: {
@@ -50,8 +50,8 @@ export const ProfilePage: FC = () => {
 
     return <PageWrapper>
         <div className="lg:hidden grid place-items-center">
-            <Button>Logout</Button>
             <p>{user && user.username}</p>
+            <Button>Logout</Button>
         </div>
         <div className="flex lg:justify-between justify-center items-center gap-4">
             <H1>HSR History</H1>
@@ -60,7 +60,7 @@ export const ProfilePage: FC = () => {
                 <p className="hidden lg:block">{user && user.username}</p>
             </div>
         </div>
-        <p>Paste our Hoyoverse wish URL to the field below to retrieve wishes from Star Rail servers</p>
+        <p>Paste your Hoyoverse wish URL to the field below to retrieve wishes from Star Rail servers</p>
         <div className="flex gap-4 lg:flex-row flex-col">
             <Input placeholder="Hoyoverse URL" value={url} setValue={setUrl}/>
             <Button onClick={() => savePulls(url)}>Fetch</Button>

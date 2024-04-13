@@ -28,7 +28,7 @@ export const Uid: FC<UidProps> = ({ uid, deleteF, simple }) => {
     if (!simple) {
         return <label onClick={isActive ? () => goto('./') :     () => goto(`/profile/${uid}/1`)} className="w-full has-[input:checked]:bg-gray-200 flex flex-row items-center rounded-xl p-3 px-4 outline outline-2 outline-offset-[-2px] outline-gray-200 justify-between">
             <p className="select-none">{uid}</p>
-            <input checked={isActive} className="hidden absolute" type="radio"></input>
+            <input checked={isActive} className="hidden absolute" type="radio" onChange={() => {}}></input>
         </label>
     }
     return <div className="flex gap-4">
