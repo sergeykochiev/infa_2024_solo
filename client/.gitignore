@@ -22,10 +22,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-# Docker
-Dockerfile
-.dockerignore
-
-# nginx
-nginx.conf*

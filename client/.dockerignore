@@ -1,0 +1,5 @@
+README.md
+.eslintrc.cjs
+node_modules
+routes/app.tsx
+dist
