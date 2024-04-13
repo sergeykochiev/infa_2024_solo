@@ -28,12 +28,6 @@ export class AuthController {
         response.status(HttpStatus.OK).send()
     }
 
-    @UseGuards(JwtAuthGuard)
-    @Get('login')
-    async initLogin(@Request() request: RequestExpress, @Response() response: ResponseExpress) {  
-        response.status(HttpStatus.OK).json({ result: request.user })
-    }
-
     @Post('signup')
     async singup(@Body() createUserDto: CreateUserDto, @Response() response: ResponseExpress) {
         if (!createUserDto.password || !createUserDto.username) {

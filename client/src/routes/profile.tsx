@@ -48,17 +48,6 @@ export const ProfilePage: FC = () => {
         return
     }
 
-    // useEffect(() => {
-    //     if (!user) {
-    //         goto('/login')
-    //         return
-    //     }
-    // }, [])
-    // console.log(user)
-
-
-    // const user = localStorage.getItem('username')
-
     return <PageWrapper>
         <div className="lg:hidden grid place-items-center">
             <Button>Logout</Button>
