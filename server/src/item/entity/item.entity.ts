@@ -13,11 +13,9 @@ export enum ItemType {
 }
 
 export class Item {
-    constructor(
-        public id: number,
-        public name: string,
-        public type: ItemType,
-        public rank: RankType,
-        public banners?: Array<Banner>
-    ) {}
+    public id: number
+    public name: string
+    public type: ItemType
+    public rank: RankType
+    public banners?: Array<Banner>
 }

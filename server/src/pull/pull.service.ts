@@ -105,25 +105,25 @@ export class PullService {
             if (lastId && Number(pull.id) == lastId) {
                 return prevPulls
             }
-            const item = new Item(
-                pull.item_id,
-                pull.name,
-                pull.item_type,
-                pull.rank_type
-            )
+            const item = {
+                id: pull.item_id,
+                name: pull.name,
+                type: pull.item_type,
+                rank: pull.rank_type
+            }
             const banner = new Banner(
                 pull.gacha_id,
                 pull.gacha_type
             )
             // await this.bannerService.save(banner)
             // await this.itemService.save(item)
-            prevPulls.push(new Pull(
-                pull.id,
-                pull.time,
-                gameAccount,
-                item,
-                banner
-            ))
+            prevPulls.push({
+                gameId: pull.id,
+                timestamp: pull.time,
+                gameAccount: gameAccount,
+                item: item,
+                banner: banner
+            })
         }
         params.end_id = prevPulls.slice(-1)[0].id
         await new Promise(e => setTimeout(e, 250))
