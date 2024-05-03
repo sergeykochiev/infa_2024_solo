@@ -4,7 +4,7 @@ WORKDIR /usr/bin/app
 
 COPY package*.json ./
 
-RUN npm i
+RUN npm i -D
 
 COPY . .
 
@@ -15,7 +15,11 @@ FROM node:21.7.3-bullseye
 
 WORKDIR /usr/bin/app
 
-COPY --from=build /usr/bin/app/dist .
+
+COPY --from=build /usr/bin/app/dist ./dist
+COPY --from=build /usr/bin/app/package*.json ./
+
+RUN npm i --omit=dev
 
 EXPOSE 8080
 
