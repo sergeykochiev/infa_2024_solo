@@ -105,16 +105,16 @@ export class PullService {
             if (lastId && Number(pull.id) == lastId) {
                 return prevPulls
             }
-            const item = {
+            const item: Item = {
                 id: pull.item_id,
                 name: pull.name,
                 type: pull.item_type,
                 rank: pull.rank_type
             }
-            const banner = new Banner(
-                pull.gacha_id,
-                pull.gacha_type
-            )
+            const banner: Banner = {
+                id: pull.gacha_id,
+                type: pull.gacha_type
+            }
             // await this.bannerService.save(banner)
             // await this.itemService.save(item)
             prevPulls.push({
@@ -124,6 +124,7 @@ export class PullService {
                 item: item,
                 banner: banner
             })
+            // params.end_id = pull.id
         }
         params.end_id = prevPulls.slice(-1)[0].id
         await new Promise(e => setTimeout(e, 250))
@@ -178,6 +179,7 @@ export class PullService {
             pulls = pulls.concat(await this.fetchPulls(lastId, params, gameAcc))
             console.log(`fetched, total now ${pulls.length}`)
         }
+        console.log(pulls.filter(e => !e.id || !e.banner.id || !e.item.id))
         await this.pullRepository.save(pulls)
         console.log('done')
         return pulls.length

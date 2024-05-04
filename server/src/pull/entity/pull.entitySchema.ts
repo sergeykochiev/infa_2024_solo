@@ -8,7 +8,6 @@ export const PullSchema = new EntitySchema<Pull>({
         id: {
             type: 'bigint',
             primary: true,
-            generated: true
         },
         timestamp: {
             type: "timestamp"
