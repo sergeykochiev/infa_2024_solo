@@ -3,8 +3,7 @@ import { Item } from "src/item/entity/item.entity"
 import { Banner } from "src/banner/entity/banner.entity"
 
 export class Pull {
-    public id?: number
-    public gameId: number
+    public id: number
     public timestamp: string
     public gameAccount: GameAccount
     public item: Item

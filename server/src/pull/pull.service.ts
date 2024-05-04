@@ -118,7 +118,7 @@ export class PullService {
             // await this.bannerService.save(banner)
             // await this.itemService.save(item)
             prevPulls.push({
-                gameId: pull.id,
+                id: pull.id,
                 timestamp: pull.time,
                 gameAccount: gameAccount,
                 item: item,
